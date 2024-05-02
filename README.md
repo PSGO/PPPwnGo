@@ -1,7 +1,7 @@
--requires windows>=7
--Just demo, don’t have too high expectations, the current success rate is not high, please wait patiently~
--The default stage.bin of PS4 11.00 is used. If you use 9.00, you need to overwrite the two bin files yourself.
--If pppwn.py is updated later, there is no need to update the exe, and it will directly overwrite "pppwn.py", "offsets.py" and the two stage.bins.
+-requires windows>=7;
+-Just demo, don’t have too high expectations, the current success rate is not high, please wait patiently;
+-The default stage.bin of PS4 11.00 is used. If you use 9.00, you need to overwrite the two bin files yourself;
+-If pppwn.py is updated later, there is no need to update the exe, and it will directly overwrite "pppwn.py", "offsets.py" and the two stage.bins;
 
 1. Open the "Install the environment first!" folder and install the three items inside
 2. Connect PS4 and PC using a network cable, enter PS4 Settings-Network-Set Internet Connection-Use Lan-Customize-PPPOE, and fill in a name and password.
