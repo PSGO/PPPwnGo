@@ -1,0 +1,3 @@
+https://www.python.org/downloads/
+
+安装最新版即可
