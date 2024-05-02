@@ -1,10 +1,11 @@
--requires windows>=7;
+- requires windows>=7.
 
--Just demo, don’t have too high expectations, the current success rate is not high, please wait patiently;
+- Just demo, don’t have too high expectations, the current success rate is not high, please wait patiently.
 
--The default stage.bin of PS4 11.00 is used. If you use 9.00, you need to overwrite the two bin files yourself;
+- The stage.bin of PS4 11.00 is used by default. If you are using other versions, you need to overwrite the two bin files yourself. All versions in the version selection drop-down box do not mean that they are all supported. This needs to be updated with PPPwn.
 
--If pppwn.py is updated later, there is no need to update the exe, and it will directly overwrite "pppwn.py", "offsets.py" and the two stage.bins;
+- If pppwn.py is updated later, there is no need to update the exe. Directly overwrite "pppwn.py", "offsets.py" in the root directory, and the bin files in the "stage1" and "stage1" folders.
+
 
 1. Open the "先装环境！" folder and install the three items inside
 2. Connect PS4 and PC using a network cable, enter PS4 Settings-Network-Set Internet Connection-Use Lan-Customize-PPPOE, and fill in a name and password.
@@ -20,18 +21,16 @@ Special thanks Andy for his efforts!
 
 
 
--要求windows>=7
-
--Just demo，不要有过高期待，当前成功率并不高，耐心等待~
-
--默认使用的是PS4 11.00的stage.bin，如果使用9.00，需要自己覆盖两个bin文件
-
--如果后续pppwn.py有更新，无需更新exe，直接覆盖“pppwn.py”、“offsets.py”和两个stage.bin
+- 要求windows>=7
+- Just demo，不要有过高期待，当前成功率并不高，耐心等待~
+- 默认使用的是PS4 11.00的stage.bin，如果使用的是其它版本，需要自己覆盖两个bin文件，版本选择下拉框中的所有版本并不意味着全都支持，这需要配合PPPwn脚本的更新
+- 如果后续pppwn.py有更新，无需更新exe，直接覆盖根目录的“pppwn.py”、“offsets.py”，以及“stage1”“stage1”中的bin文件
 
 1. 打开“先装环境！”文件夹，安装里面的三项
 2. 把PS4和PC使用网线连接，进入PS4设置-网络-设定互联网连接-使用Lan-定制-PPPOE，随便填写一个名称和密码
-3. 运行“PPPwnGo.exe”，选择PS4版本和对应的网卡，一般默认就可以（除非你有多个网卡），点击“Go”按钮
+3. 运行“PPPwnGo.exe”，选择PS4版本和相应的网卡，一般默认就可以（除非你有多个网卡），点击“Go”按钮
 4. 在PS4网络中点击进入“测试互联网”
-5. 等待执行结束会显示“done”，PS4左上角会弹出“PPPwn”，如果卡住、失败、死机或断电，重复3&4
+5. 等待执行结束会显示“done”，PS4左上角会弹出“PPPwned”，如果卡住、失败、死机或断电，重复3&4
+
 
 再次特别感谢阮·Andy的付出！
