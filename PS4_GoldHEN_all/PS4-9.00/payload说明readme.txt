@@ -1,0 +1,1 @@
+把payload.bin放入exfat格式的U盘根目录，插入PS4，使用PPPwn即可注入GoldHEN
