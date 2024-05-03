@@ -1,6 +1,5 @@
 -要求windows>=7
 -Just demo，不要有过高期待，当前成功率并不高，耐心等待~
--默认使用的是PS4 11.00的stage.bin，如果使用的是其它版本，需要自己覆盖两个bin文件
 -如果后续pppwn.py有更新，无需更新exe，直接覆盖根目录的“pppwn.py”、“offsets.py”和“stage1”“stage1”中的bin文件
 
 1. 打开“先装环境！”文件夹，安装里面的三项

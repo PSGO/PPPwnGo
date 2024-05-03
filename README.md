@@ -2,8 +2,6 @@
 
 - Just demo, don’t have too high expectations, the current success rate is not high, please wait patiently.
 
-- The stage.bin of PS4 11.00 is used by default. If you are using other versions, you need to overwrite the two bin files yourself. All versions in the version selection drop-down box do not mean that they are all supported. This needs to be updated with PPPwn.
-
 - If pppwn.py is updated later, there is no need to update the exe. Directly overwrite "pppwn.py", "offsets.py" in the root directory, and the bin files in the "stage1" and "stage1" folders.
 
 
@@ -23,7 +21,6 @@ Special thanks Andy for his efforts!
 
 - 要求windows>=7
 - Just demo，不要有过高期待，当前成功率并不高，耐心等待~
-- 默认使用的是PS4 11.00的stage.bin，如果使用的是其它版本，需要自己覆盖两个bin文件，版本选择下拉框中的所有版本并不意味着全都支持，这需要配合PPPwn脚本的更新
 - 如果后续pppwn.py有更新，无需更新exe，直接覆盖根目录的“pppwn.py”、“offsets.py”，以及“stage1”“stage1”中的bin文件
 
 1. 打开“先装环境！”文件夹，安装里面的三项
