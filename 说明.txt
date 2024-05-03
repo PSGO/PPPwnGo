@@ -1,6 +1,6 @@
 -要求windows>=7
 -Just demo，不要有过高期待，当前成功率并不高，耐心等待~
--如果后续pppwn.py有更新，无需更新exe，直接覆盖根目录的“pppwn.py”、“offsets.py”和“stage1”“stage1”中的bin文件
+-如果后续pppwn.py有更新，无需更新exe，直接覆盖根目录的“pppwn.py”、“offsets.py”
 
 1. 打开“先装环境！”文件夹，安装里面的三项
 2. 把PS4和PC使用网线连接，进入PS4设置-网络-设定互联网连接-使用Lan-定制-PPPOE，随便填写一个名称和密码
