@@ -1,3 +1,12 @@
+Supported versions are:
+
+FW 9.00 with GoldHEN
+FW 9.03 / 9.04
+FW 9.50 / 9.60
+FW 10.00 / 10.01
+FW 10.50 / 10.70 / 10.71
+FW 11.00
+
 - requires windows>=7.
 
 - Just demo, don’t have too high expectations, the current success rate is not high, please wait patiently.
@@ -18,7 +27,14 @@ Special thanks Andy for his efforts!
 
 ----------------------------------------------------------------------------------------
 
+支持的版本：
 
+FW 9.00 可注入 GoldHEN
+FW 9.03 / 9.04
+FW 9.50 / 9.60
+FW 10.00 / 10.01
+FW 10.50 / 10.70 / 10.71
+FW 11.00
 
 - 要求windows>=7
 - Just demo，不要有过高期待，当前成功率并不高，耐心等待~
