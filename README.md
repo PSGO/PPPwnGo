@@ -1,11 +1,6 @@
 Supported versions are:
 
-FW 9.00 with GoldHEN
-FW 9.03 / 9.04
-FW 9.50 / 9.60
-FW 10.00 / 10.01
-FW 10.50 / 10.70 / 10.71
-FW 11.00
+FW 9.00 with GoldHEN / 9.03 / 9.04 / 9.50 / 9.60 / 10.00 / 10.01 / 10.50 / 10.70 / 10.71 / 11.00
 
 - requires windows>=7.
 
@@ -29,14 +24,9 @@ Special thanks Andy for his efforts!
 
 支持的版本：
 
-FW 9.00 可注入 GoldHEN
-FW 9.03 / 9.04
-FW 9.50 / 9.60
-FW 10.00 / 10.01
-FW 10.50 / 10.70 / 10.71
-FW 11.00
+FW 9.00 可注入GoldHEN / 9.03 / 9.04 / 9.50 / 9.60 / 10.00 / 10.01 / 10.50 / 10.70 / 10.71 / 11.00
 
-- 要求windows>=7
+- 要求 windows>=7
 - Just demo，不要有过高期待，当前成功率并不高，耐心等待~
 - 如果后续pppwn.py有更新，无需更新exe，直接覆盖根目录的“pppwn.py”、“offsets.py”
 
