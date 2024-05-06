@@ -4,7 +4,7 @@ Supported versions are:
 - 9.03 / 9.04 / 9.50 / 9.60 / 10.00 / 10.01 / 10.50 / 10.70 / 10.71
 
 illustrate:
-- .net2.0、32或64位、>=Win7 
+- .Net2.0、32 or 64bit、Win>=7 
 
 - Just demo, don’t have too high expectations, the current overall success rate is not high. The success rates vary between different versions. Please wait patiently~
 
@@ -32,7 +32,7 @@ Special thanks Andy for his efforts!
 - 9.03 / 9.04 / 9.50 / 9.60 / 10.00 / 10.01 / 10.50 / 10.70 / 10.71
 
 说明：
-- .net2.0、32或64位、>=Win7 
+- .net2.0、32或64位、Win>=7 
 - 不要有过高期待，当前整体成功率并不高，不同版本之间成功率有差异，耐心等待~
 - 如果后续pppwn.py和stage.bin有更新，无需更新exe，直接覆盖根目录的“pppwn.py”、“offsets.py”和“PS4_stage_bin_all”中的bin
 
