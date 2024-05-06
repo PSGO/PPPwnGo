@@ -18,6 +18,8 @@ Step：
 5. Click to enter "Test Internet" in the PS4 network
 6. When the execution is completed, "done" will be displayed, and "PPPwn" will pop up in the upper left corner of PS4. If it is stuck, fails, crashes or loses power, repeat 4&5，if it fails more than 3 times in a row, please  turn the PS4 network switch back on or restart PS4
 
+Tip: A little trick that can improve the success rate. After failure, first turn off the network switch of PS4 or disconnect the network cable, then turn it on and try again！
+
 Special thanks Andy for his efforts!
 
 
@@ -41,6 +43,8 @@ Special thanks Andy for his efforts!
 4. 运行“PPPwnGo.exe”，选择PS4版本和相应的网卡，一般默认就可以（除非你有多个网卡），点击“Go”按钮
 5. 在PS4网络中点击进入“测试互联网”
 6. 等待执行结束会显示“done”，PS4左上角会弹出“PPPwned”，如果卡住、失败、死机或断电，重复4&5，连续超过3次失败，请重新打开PS4网络开关或重启PS4
+
+提示：一个可以提高成功率的小技巧，失败后先关闭PS4的网络开关或者断开网线，然后开启后再试！
 
 
 再次特别感谢阮·Andy的付出！
