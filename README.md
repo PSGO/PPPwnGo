@@ -1,8 +1,8 @@
-Supported versions are:
+Supported versions:
 - 11.00 supports the installation of PKG, and will soon support the injection of GoldHEN
 - 10.00 / 10.01 supports the installation of PKG
 - 9.00 support the injection of GoldHEN
-- 9.03 / 9.04 / 9.50 / 9.60 / 10.50 / 10.70 / 10.71
+- 9.03 / 9.04 / 9.50 / 9.51 / 9.60 / 10.50 / 10.70 / 10.71
 
 illustrate:
 - .Net2.0、32 or 64bit、Win>=7 
@@ -28,10 +28,10 @@ Special thanks Andy for his efforts!
 ----------------------------------------------------------------------------------------
 
 支持的版本：
-- 11.00 当前支持安装PKG，即将支持注入GoldHEN 
-- 9.00 可注入GoldHEN 
+- 11.00 当前支持安装PKG，即将支持注入GoldHEN
 - 10.00 / 10.01 当前支持安装PKG
-- 9.03 / 9.04 / 9.50 / 9.60 / 10.50 / 10.70 / 10.71
+- 9.00 可注入GoldHEN 
+- 9.03 / 9.04 / 9.50 / 9.51 / 9.60 / 10.50 / 10.70 / 10.71
 
 说明：
 - .net2.0、32或64位、Win>=7 
