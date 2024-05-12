@@ -1,4 +1,4 @@
-The new 1.9b version is an experimental version. There will be a pop-up window when starting, confirm the authorization. When using this version, you do not need to enter the "Test Internet Connection" page. You can stop on the homepage or any interface.
+The new version is an experimental version. There will be a pop-up window when starting, confirm the authorization. When using this version, you do not need to enter the "Test Internet Connection" page. You can stay on the homepage or any interface.
 
 Supported versions:
 - 11.00 with GoldHEN v2.4b17
@@ -28,7 +28,8 @@ Special thanks Andy for his efforts!
 
 
 ----------------------------------------------------------------------------------------
-新的1.9b版本是一个实验性版本，启动会有一个弹窗，确定给授权，这个版本折腾的时候不需要进入“测试互联网连接”页面，停在首页或者任何界面都可以
+当前版本是一个实验性版本，启动会有一个弹窗，确定给授权，这个版本折腾的时候不需要进入“测试互联网连接”页面，停在首页或者任何界面都可以
+默认为C++版，无需安装python环境，只需提前安装好npcap
 
 支持的版本：
 - 11.00 可注入GoldHEN v2.4b17
