@@ -1,10 +1,16 @@
 The new version is an experimental version. There will be a pop-up window when starting, confirm the authorization. When using this version, you do not need to enter the "Test Internet Connection" page. You can stay on the homepage or any interface.
 
 Supported versions:
-- 11.00 with GoldHEN v2.4b17
-- 10.00 / 10.01 install PKG
-- 9.00 with GoldHEN v2.4b17
-- 9.03 / 9.04 / 9.50 / 9.51 / 9.60 / 10.50 / 10.70 / 10.71
+- FW 7.00 / 7.01 / 7.02
+- FW 7.50 / 7.51 / 7.55
+- FW 8.00 / 8.01 / 8.03
+- FW 8.50 / 8.52
+- FW 9.00（GoldHEN）
+- FW 9.03 / 9.04
+- FW 9.50 / 9.51 / 9.60
+- FW 10.00 / 10.01（GoldHEN）
+- FW 10.50 / 10.70 / 10.71
+- FW 11.00（GoldHEN）
 
 illustrate:
 - .Net2.0、32 or 64bit、Win>=7 
