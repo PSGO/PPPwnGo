@@ -10,9 +10,9 @@
 - FW 9.00（GoldHEN）
 - FW 9.03 / 9.04（VTX）
 - FW 9.50（VTX）/ 9.51
-- FW 9.60（VTX）
+- FW 9.60（GoldHEN）
 - FW 10.00 / 10.01（GoldHEN）
-- FW 10.50 （GoldHEN）
+- FW 10.50（VTX）
 - FW 10.70 / 10.71（VTX）
 - FW 11.00（GoldHEN）
 
