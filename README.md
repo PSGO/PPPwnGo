@@ -1,4 +1,4 @@
-The new version is an experimental version. There will be a pop-up window when starting, confirm the authorization. When using this version, you do not need to enter the "Test Internet Connection" page. You can stay on the homepage or any interface.
+There will be a pop-up window when starting, confirm the authorization. When using this version, you do not need to enter the "Test Internet Connection" page. You can stay on the homepage or any interface.
 
 Supported versions:
 - FW 7.00 / 7.01 / 7.02
@@ -38,20 +38,24 @@ Special thanks Andy for his efforts!
 
 
 ----------------------------------------------------------------------------------------
-当前版本是一个实验性版本，启动会有一个弹窗，确定给授权，这个版本折腾的时候不需要进入“测试互联网连接”页面，停在首页或者任何界面都可以
+启动会有一个弹窗，确定给授权，这个版本折腾的时候不需要进入“测试互联网连接”页面，停在首页或者任何界面都可以
 
 默认为C++版，无需安装python环境，只需提前安装好npcap
 
 支持的版本：
 - FW 7.00 / 7.01 / 7.02
-- FW 7.50 / 7.51 / 7.55
-- FW 8.00 / 8.01 / 8.03
-- FW 8.50 / 8.52
+- FW 7.50 / 7.51
+- FW 7.55（VTX）
+- FW 8.00 / 8.01
+- FW 8.03（VTX）
+- FW 8.50 / 8.52（VTX）
 - FW 9.00（GoldHEN）
-- FW 9.03 / 9.04
-- FW 9.50 / 9.51 / 9.60
+- FW 9.03 / 9.04（VTX）
+- FW 9.50（VTX）/ 9.51
+- FW 9.60（VTX）
 - FW 10.00 / 10.01（GoldHEN）
-- FW 10.50 / 10.70 / 10.71
+- FW 10.50 （GoldHEN）
+- FW 10.70 / 10.71（VTX）
 - FW 11.00（GoldHEN）
 
 说明：
