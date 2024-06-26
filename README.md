@@ -9,7 +9,7 @@ Supported versions:
 - FW 8.50 / 8.52（VTX）
 - FW 9.00（GoldHEN）
 - FW 9.03 / 9.04（VTX）
-- FW 9.50（VTX）/ 9.51
+- FW 9.50 / 9.51（VTX）
 - FW 9.60（GoldHEN）
 - FW 10.00 / 10.01（GoldHEN）
 - FW 10.50（VTX）
