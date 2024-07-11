@@ -1,10 +1,10 @@
 There will be a pop-up window when starting, confirm the authorization. When using this version, you do not need to enter the "Test Internet Connection" page. You can stay on the homepage or any interface.
 
 Supported versions:
-- FW 7.00 / 7.01 / 7.02
-- FW 7.50 / 7.51
+- FW 7.00 / 7.01 / 7.02（VTX）
+- FW 7.50 / 7.51（VTX）
 - FW 7.55（VTX）
-- FW 8.00 / 8.01
+- FW 8.00 / 8.01（VTX）
 - FW 8.03（VTX）
 - FW 8.50 / 8.52（VTX）
 - FW 9.00（GoldHEN）
@@ -24,7 +24,7 @@ illustrate:
 - If pppwn.py is updated later, there is no need to update the exe. Directly overwrite "pppwn.py"、 "offsets.py" in the main directory & bin of “PS4_stage_bin_all”folder
 
 Step：
-1. Open the "Python!" folder and install all（install the latest version of python）
+1. Open the "Python!+Npcap" folder and install all（install the latest version of python）
 2. Open the "PS4_GoldHEN_all" folder, put the corresponding version of goldhen.bin into the root directory of the exfat format U disk, and insert it into the PS4
 3. Connect PS4 and PC using a network cable, enter PS4 Settings-Network-Set Internet Connection-Use Lan-Customize-PPPOE, and fill in a name and password.
 4. Run "PPPwnGo.exe", select the PS4 version and the corresponding network card, generally the default is fine (unless you have multiple network cards), click the "Go" button
@@ -43,15 +43,15 @@ Special thanks Andy for his efforts!
 默认为C++版，无需安装python环境，只需提前安装好npcap
 
 支持的版本：
-- FW 7.00 / 7.01 / 7.02
-- FW 7.50 / 7.51
+- FW 7.00 / 7.01 / 7.02（VTX）
+- FW 7.50 / 7.51（VTX）
 - FW 7.55（VTX）
-- FW 8.00 / 8.01
+- FW 8.00 / 8.01（VTX）
 - FW 8.03（VTX）
 - FW 8.50 / 8.52（VTX）
 - FW 9.00（GoldHEN）
 - FW 9.03 / 9.04（VTX）
-- FW 9.50（VTX）/ 9.51
+- FW 9.50 / 9.51（VTX）
 - FW 9.60（GoldHEN）
 - FW 10.00 / 10.01（GoldHEN）
 - FW 10.50（VTX）
@@ -64,7 +64,7 @@ Special thanks Andy for his efforts!
 - 如果后续pppwn.py和stage.bin有更新，无需更新exe，直接覆盖根目录的“pppwn.py”、“offsets.py”和“PS4_stage_bin_all”中的bin
 
 简要步骤：
-1. 打开“Python!”文件夹，安装里面的内容，建议安装最新版的python
+1. 打开“Python!+Npcap”文件夹，安装里面的内容，建议安装最新版的python”文件夹，安装里面的内容，建议安装最新版的python
 2. 打开“PS4_GoldHEN_all”文件夹，把对应版本的goldhen.bin放入exfat格式的U盘根目录，插入PS4
 3. 把PS4和PC使用网线连接，进入PS4设置-网络-设定互联网连接-使用Lan-定制-PPPOE，随便填写一个名称和密码，后面几项默认
 4. 运行“PPPwnGo.exe”，选择PS4版本和相应的网卡，一般默认就可以（除非你有多个网卡），点击“Go”按钮
