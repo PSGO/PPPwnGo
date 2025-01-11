@@ -1,0 +1,77 @@
+name: Check GoldHEN Releases
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 每天凌晨 0 点执行
+  workflow_dispatch: # 手动触发
+
+jobs:
+  check_releases:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y p7zip-full unrar
+
+    - name: Get latest release info
+      id: get_latest_info
+      run: |
+        latest_url=$(curl -s https://github.com/GoldHEN/GoldHEN/releases | grep -oP 'href="/GoldHEN/GoldHEN/releases/download/.*?.(zip|rar|7z)"' | head -n 1 | cut -d '"' -f 2)
+        latest_title=$(curl -s https://github.com/GoldHEN/GoldHEN/releases | grep -oP '(?<=<title>Release ).*?(?= · GoldHEN)' | head -n 1)
+        echo "latest_url=https://github.com$latest_url" >> $GITHUB_ENV
+        echo "latest_title=$latest_title" >> $GITHUB_ENV
+        echo $latest_url | sha256sum | awk '{print $1}' > latest_hash.txt
+
+    - name: Compare hash
+      run: |
+        mkdir -p log
+        if [[ -f log/last_hash.txt ]] && cmp --silent log/last_hash.txt latest_hash.txt; then
+          echo "No new release. Stopping workflow."
+          exit 0
+        fi
+        mv latest_hash.txt log/last_hash.txt
+
+    - name: Download latest release
+      run: |
+        curl -L -o latest_release $(cat $GITHUB_ENV | grep latest_url | cut -d '=' -f 2)
+
+    - name: Extract downloaded file
+      run: |
+        mkdir -p extracted
+        file_type=$(file --mime-type -b latest_release)
+        case "$file_type" in
+          application/zip) unzip latest_release -d extracted ;;
+          application/x-rar) unrar x latest_release extracted ;;
+          application/x-7z-compressed) 7z x latest_release -oextracted ;;
+          *) echo "Unsupported file type: $file_type" && exit 1 ;;
+        esac
+
+    - name: Search and extract stage2 archive
+      run: |
+        stage2_file=$(find extracted -type f -iregex '.*stage2.*\.\(zip\|rar\|7z\)$' | head -n 1)
+        if [ -n "$stage2_file" ]; then
+          echo "Found stage2 archive: $stage2_file"
+          file_type=$(file --mime-type -b "$stage2_file")
+          case "$file_type" in
+            application/zip) unzip "$stage2_file" -d extracted ;;
+            application/x-rar) unrar x "$stage2_file" extracted ;;
+            application/x-7z-compressed) 7z x "$stage2_file" -oextracted ;;
+            *) echo "Unsupported file type for stage2: $file_type" && exit 1 ;;
+          esac
+        else
+          echo "No stage2 archive found."
+        fi
+
+    - name: Push extracted content to main branch
+      run: |
+        rsync -av --exclude '.git' extracted/ .
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Update: ${{ env.latest_title }}"
+        git push origin main
