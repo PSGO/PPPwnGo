@@ -1,9 +1,9 @@
-name: Check GoldHEN Releases
+name: Check GoldHEN Release
 
 on:
   schedule:
-    - cron: '0 0 * * *' # 每天凌晨 0 点执行
-  workflow_dispatch: # 手动触发
+    - cron: '0 0 * * *'  # 每天凌晨 0 点执行
+  workflow_dispatch:  # 手动触发
 
 jobs:
   check_releases:
@@ -13,32 +13,73 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Get latest release info from GitHub API
+      id: get_latest_info
+      run: |
+        # 获取所有的发布版本信息
+        releases_info=$(curl -s https://api.github.com/repos/GoldHEN/GoldHEN/releases)
+        
+        # 从所有发布版本中按发布时间排序，选择最新的一个
+        latest_release=$(echo "$releases_info" | jq -r 'sort_by(.published_at) | .[-1].assets[0].browser_download_url')
+        latest_title=$(echo "$releases_info" | jq -r 'sort_by(.published_at) | .[-1].name')
+        latest_published_at=$(echo "$releases_info" | jq -r 'sort_by(.published_at) | .[-1].published_at')
+
+        echo "Latest release URL: $latest_release"
+        echo "Latest release title: $latest_title"
+        echo "Latest release published at: $latest_published_at"
+        
+        # 保存为环境变量
+        echo "latest_url=$latest_release" >> $GITHUB_ENV
+        echo "latest_title=$latest_title" >> $GITHUB_ENV
+        echo "latest_published_at=$latest_published_at" >> $GITHUB_ENV
+
+        # 检查 log 文件夹是否存在，不存在则创建
+        mkdir -p log
+        
+        # 获取当前已存储的最新发布的标题
+        if [[ -f log/last_release_title.txt ]]; then
+          stored_release_title=$(cat log/last_release_title.txt)
+        else
+          stored_release_title=""
+        fi
+
+        # 输出调试信息：去掉空格和特殊字符后对比
+        echo "Stored release title: $stored_release_title"
+        echo "Latest release title: $latest_title"
+
+        # 去除空格和特殊字符
+        stored_release_title_cleaned=$(echo "$stored_release_title" | tr -d '[:space:]')
+        latest_title_cleaned=$(echo "$latest_title" | tr -d '[:space:]')
+
+        # 存储清洗后的标题
+        echo "stored_release_title_cleaned=$stored_release_title_cleaned" >> $GITHUB_ENV
+        echo "latest_title_cleaned=$latest_title_cleaned" >> $GITHUB_ENV
+
+    - name: Compare release title
+      run: |
+        # 如果没有存储的发布标题，则跳过下载
+        if [[ -z "$stored_release_title_cleaned" ]]; then
+          echo "No previous release stored. Proceeding to download new release."
+        else
+          # 判断是否有新版本发布（忽略大小写和空格）
+          if [[ "${latest_title_cleaned,,}" == "${stored_release_title_cleaned,,}" ]]; then
+            echo "No new release. Stopping workflow."
+            exit 1  # 没有新版本时，直接退出
+          fi
+        fi
+
+        # 更新存储的发布标题
+        echo "$latest_title" > log/last_release_title.txt
+        echo "stored_release_title=$latest_title" >> $GITHUB_ENV
+
     - name: Install dependencies
       run: |
         sudo apt-get update
         sudo apt-get install -y p7zip-full unrar
 
-    - name: Get latest release info
-      id: get_latest_info
-      run: |
-        latest_url=$(curl -s https://github.com/GoldHEN/GoldHEN/releases | grep -oP 'href="/GoldHEN/GoldHEN/releases/download/.*?.(zip|rar|7z)"' | head -n 1 | cut -d '"' -f 2)
-        latest_title=$(curl -s https://github.com/GoldHEN/GoldHEN/releases | grep -oP '(?<=<title>Release ).*?(?= · GoldHEN)' | head -n 1)
-        echo "latest_url=https://github.com$latest_url" >> $GITHUB_ENV
-        echo "latest_title=$latest_title" >> $GITHUB_ENV
-        echo $latest_url | sha256sum | awk '{print $1}' > latest_hash.txt
-
-    - name: Compare hash
-      run: |
-        mkdir -p log
-        if [[ -f log/last_hash.txt ]] && cmp --silent log/last_hash.txt latest_hash.txt; then
-          echo "No new release. Stopping workflow."
-          exit 0
-        fi
-        mv latest_hash.txt log/last_hash.txt
-
     - name: Download latest release
       run: |
-        curl -L -o latest_release $(cat $GITHUB_ENV | grep latest_url | cut -d '=' -f 2)
+        curl -L -o latest_release ${{ env.latest_url }}
 
     - name: Extract downloaded file
       run: |
@@ -67,11 +108,21 @@ jobs:
           echo "No stage2 archive found."
         fi
 
-    - name: Push extracted content to main branch
+    - name: Clean up old GoldHEN & stage2 folder
       run: |
-        rsync -av --exclude '.git' extracted/ .
+        # 删除已有的 GoldHEN & stage2 文件夹
+        if [ -d "GoldHEN & stage2" ]; then
+          rm -rf "GoldHEN & stage2"
+        fi
+
+    - name: Rename extracted folder and commit
+      run: |
+        # 重命名 extracted 文件夹为 GoldHEN & stage2
+        mv extracted "GoldHEN & stage2"
+
+        # 提交到 main 分支
         git config --global user.name "github-actions[bot]"
         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add .
+        git add "log/last_release_title.txt" "GoldHEN & stage2"
         git commit -m "Update: ${{ env.latest_title }}"
         git push origin main
