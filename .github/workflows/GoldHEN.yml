@@ -1,128 +1,107 @@
-name: Check GoldHEN Release
+name: Fetch and Download GoldHEN Releases
 
 on:
   schedule:
-    - cron: '0 */2 * * *'  # 每两个小时执行一次
-  workflow_dispatch:  # 手动触发
+    - cron: "0 */1 * * *" # 每 6 小时运行一次
+  workflow_dispatch: # 手动触发
 
 jobs:
-  check_releases:
+  fetch-download:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      # 检出仓库代码
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Get latest release info from GitHub API
-      id: get_latest_info
-      run: |
-        # 获取所有的发布版本信息
-        releases_info=$(curl -s https://api.github.com/repos/GoldHEN/GoldHEN/releases)
-        
-        # 从所有发布版本中按发布时间排序，选择最新的一个
-        latest_release=$(echo "$releases_info" | jq -r 'sort_by(.published_at) | .[-1].assets[0].browser_download_url')
-        latest_title=$(echo "$releases_info" | jq -r 'sort_by(.published_at) | .[-1].name')
-        latest_published_at=$(echo "$releases_info" | jq -r 'sort_by(.published_at) | .[-1].published_at')
+      # 清理旧文件和压缩包
+      - name: Clean up old files
+        run: |
+          rm -rf GoldHEN_stage2_all GoldHEN_stage2_all.zip
+          echo "Old files and folders have been deleted."
+      
+      # 获取最新版本并判断是否需要下载
+      - name: Check for new release
+        run: |
+          # 创建 log 目录（如果不存在）
+          mkdir -p log
 
-        echo "Latest release URL: $latest_release"
-        echo "Latest release title: $latest_title"
-        echo "Latest release published at: $latest_published_at"
-        
-        # 保存为环境变量
-        echo "latest_url=$latest_release" >> $GITHUB_ENV
-        echo "latest_title=$latest_title" >> $GITHUB_ENV
-        echo "latest_published_at=$latest_published_at" >> $GITHUB_ENV
+          # 定义存储最新版本的文件路径
+          LATEST_VERSION_FILE="log/latest_version.txt"
 
-        # 检查 log 文件夹是否存在，不存在则创建
-        mkdir -p log
-        
-        # 获取当前已存储的最新发布的标题
-        if [[ -f log/last_release_title.txt ]]; then
-          stored_release_title=$(cat log/last_release_title.txt)
-        else
-          stored_release_title=""
-        fi
+          # 获取最新发布版本的信息
+          RESPONSE=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/GoldHEN/GoldHEN/releases)
+          echo "API Response: $RESPONSE"
 
-        # 输出调试信息：去掉空格和特殊字符后对比
-        echo "Stored release title: $stored_release_title"
-        echo "Latest release title: $latest_title"
+          # 提取最新版本的 tag_name
+          LATEST_VERSION=$(echo "$RESPONSE" | jq -r '.[0].tag_name')
+          echo "Latest version: $LATEST_VERSION"
 
-        # 去除空格和特殊字符
-        stored_release_title_cleaned=$(echo "$stored_release_title" | tr -d '[:space:]')
-        latest_title_cleaned=$(echo "$latest_title" | tr -d '[:space:]')
+          # 检查是否已存在最新版本的记录
+          if [[ -f "$LATEST_VERSION_FILE" ]]; then
+            STORED_VERSION=$(cat "$LATEST_VERSION_FILE")
+            echo "Stored version: $STORED_VERSION"
 
-        # 存储清洗后的标题
-        echo "stored_release_title_cleaned=$stored_release_title_cleaned" >> $GITHUB_ENV
-        echo "latest_title_cleaned=$latest_title_cleaned" >> $GITHUB_ENV
-
-    - name: Compare release title
-      run: |
-        # 如果没有存储的发布标题，则跳过下载
-        if [[ -z "$stored_release_title_cleaned" ]]; then
-          echo "No previous release stored. Proceeding to download new release."
-        else
-          # 判断是否有新版本发布（忽略大小写和空格）
-          if [[ "${latest_title_cleaned,,}" == "${stored_release_title_cleaned,,}" ]]; then
-            echo "No new release. Stopping workflow."
-            exit 1  # 没有新版本时，直接退出
+            if [[ "$LATEST_VERSION" == "$STORED_VERSION" ]]; then
+              echo "No new version detected. Skipping download."
+              exit 1
+            fi
           fi
-        fi
 
-        # 更新存储的发布标题
-        echo "$latest_title" > log/last_release_title.txt
-        echo "stored_release_title=$latest_title" >> $GITHUB_ENV
+          # 存储最新版本号
+          echo "$LATEST_VERSION" > "$LATEST_VERSION_FILE"
+          echo "New version detected. Proceeding with download."
+      
+      # 创建主目录并下载发布文件
+      - name: Fetch release assets and download
+        run: |
+          # 创建主目录
+          mkdir -p GoldHEN_stage2_all
 
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y p7zip-full unrar
+          # 当前时间的日期目录
+          DATE_DIR=$(date +'%Y-%m-%d_%H-%M-%S')
+          mkdir -p "GoldHEN_stage2_all/$DATE_DIR"
 
-    - name: Download latest release
-      run: |
-        curl -L -o latest_release ${{ env.latest_url }}
+          # 获取发布版本文件链接
+          RESPONSE=$(curl -s -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/GoldHEN/GoldHEN/releases)
+          echo "API Response: $RESPONSE"
 
-    - name: Extract downloaded file
-      run: |
-        mkdir -p extracted
-        file_type=$(file --mime-type -b latest_release)
-        case "$file_type" in
-          application/zip) unzip latest_release -d extracted ;;
-          application/x-rar) unrar x latest_release extracted ;;
-          application/x-7z-compressed) 7z x latest_release -oextracted ;;
-          *) echo "Unsupported file type: $file_type" && exit 1 ;;
-        esac
+          # 提取所有文件的下载链接
+          ASSETS=$(echo "$RESPONSE" | jq -r '.[] | .assets[]?.browser_download_url')
+          if [[ -z "$ASSETS" ]]; then
+            echo "No assets found. Exiting."
+            exit 1
+          fi
 
-    - name: Search and extract stage2 archive
-      run: |
-        stage2_file=$(find extracted -type f -iregex '.*stage2.*\.\(zip\|rar\|7z\)$' | head -n 1)
-        if [ -n "$stage2_file" ]; then
-          echo "Found stage2 archive: $stage2_file"
-          file_type=$(file --mime-type -b "$stage2_file")
-          case "$file_type" in
-            application/zip) unzip "$stage2_file" -d extracted ;;
-            application/x-rar) unrar x "$stage2_file" extracted ;;
-            application/x-7z-compressed) 7z x "$stage2_file" -oextracted ;;
-            *) echo "Unsupported file type for stage2: $file_type" && exit 1 ;;
-          esac
-        else
-          echo "No stage2 archive found."
-        fi
+          # 下载所有文件到日期目录中
+          for URL in $ASSETS; do
+            echo "Downloading $URL..."
+            FILENAME=$(basename "$URL")
+            curl -L -o "GoldHEN_stage2_all/$DATE_DIR/$FILENAME" "$URL"
+            
+            # 在文件名后追加 "_psgo.eu.org"
+            EXTENSION="${FILENAME##*.}"  # 获取扩展名
+            BASENAME="${FILENAME%.*}"   # 获取文件名（不包括扩展名）
+            mv "GoldHEN_stage2_all/$DATE_DIR/$FILENAME" "GoldHEN_stage2_all/$DATE_DIR/${BASENAME}_psgo.eu.org.${EXTENSION}"
+          done
 
-    - name: Clean up old GoldHEN & stage2 folder
-      run: |
-        # 删除已有的 GoldHEN & stage2 文件夹
-        if [ -d "GoldHEN & stage2" ]; then
-          rm -rf "GoldHEN & stage2"
-        fi
+      # 压缩 GoldHEN_stage2_all 文件夹
+      - name: Compress GoldHEN_stage2_all folder
+        run: |
+          if [ -d "GoldHEN_stage2_all" ] && [ "$(ls -A GoldHEN_stage2_all)" ]; then
+            zip -r GoldHEN_stage2_all.zip GoldHEN_stage2_all
+          else
+            echo "No files to compress in GoldHEN_stage2_all. Exiting."
+            exit 1
+          fi
 
-    - name: Rename extracted folder and commit
-      run: |
-        # 重命名 extracted 文件夹为 GoldHEN & stage2
-        mv extracted "GoldHEN & stage2"
-
-        # 提交到 main 分支
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git add "log/last_release_title.txt" "GoldHEN & stage2"
-        git commit -m "Update: ${{ env.latest_title }}"
-        git push origin main
+      # 提交并推送文件到 main 分支
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add log/latest_version.txt GoldHEN_stage2_all GoldHEN_stage2_all.zip
+          git commit -m "Update GoldHEN_stage2_all on $(date +'%Y-%m-%d %H:%M:%S')"
+          git push origin main
